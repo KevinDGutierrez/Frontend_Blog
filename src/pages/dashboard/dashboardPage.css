@@ -1,0 +1,190 @@
+.dashboard-container {
+  width: 100%;
+  height: 100vh;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: -1;
+}
+
+.nav-container {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid rgb(41, 37, 37);
+  box-shadow: 0 0 5px 0 rgb(61, 61, 61);
+  box-sizing: border-box;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+.nav-logo-container {
+  width: 30px;
+  margin-left: 10px;
+}
+
+.nav-button {
+  font-size: 18px;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-button:hover {
+  opacity: 0.7;
+}
+
+.nav-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dashboard-center-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  padding: 24px 32px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.role-label {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-administrator {
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.2);
+  border: 1px solid rgba(255,193,7,0.4);
+}
+
+.role-employee {
+  color: #4fc3f7;
+  background: rgba(79, 195, 247, 0.15);
+  border: 1px solid rgba(79,195,247,0.3);
+}
+
+.role-badge {
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.user-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  min-height: 100vh;
+}
+
+.settings-form input {
+  background-color: rgba(17, 14, 14, 0.435); 
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  width: 75%;
+  margin-bottom: 1rem;
+  font-size: 16px;
+}
+.settings-form {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 16px 30px;        
+  border-radius: 12px;
+  width: 60%;
+  max-width: 320px;
+  margin-top: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  max-height: 80vh;          
+}
+
+.settings-form input,
+.settings-form label {
+  margin-bottom: 8px;  
+}
+
+.settings-form input:focus {
+  outline: none;
+  background-color: rgba(52, 34, 34, 0.452);
+  border: 1px solid white;
+}
+
+.settings-form input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.settings-form button[type="submit"] {
+  background-color: #1976d2;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.settings-form button[type="submit"]:hover {
+  background-color: #115293;
+}
+
+.delete-button {
+  margin-top: 16px;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #9a0007;
+}
+

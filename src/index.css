@@ -1,0 +1,339 @@
+/* ======================= */
+/* FONDO DE VIDEO */
+/* ======================= */
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.video-background video,
+.video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+
+.video.visible {
+  opacity: 1;
+  z-index: -1;
+}
+
+.video.hidden {
+  opacity: 0;
+  z-index: -2;
+}
+
+/* ======================= */
+/* TÍTULO */
+/* ======================= */
+.app-title {
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+  font-size: 2rem;
+}
+
+/* ======================= */
+/* NAVBAR PERSONALIZADO */
+/* ======================= */
+.custom-navbar {
+  backdrop-filter: blur(6px);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ======================= */
+/* ALERTAS */
+/* ======================= */
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+
+/* ======================= */
+/* FILTRO Y ORDEN DE TAREAS */
+/* ======================= */
+.form-select {
+  width: 200px;
+  margin-right: 20px;
+}
+
+.btn-primary {
+  margin-top: 10px;
+  background-color: #007bff;
+}
+
+.publication-card {
+  border-radius: 12px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  backdrop-filter: blur(4px); /* Difuminado suave del fondo */
+}
+
+/* Modo claro: rojo (#b10e08) con transparencia */
+.modo-claro .publication-card {
+  background-color: rgba(177, 14, 8, 0.85); /* rojo con transparencia */
+  color: white;
+}
+
+/* Modo oscuro: celeste claro con transparencia */
+.modo-oscuro .publication-card {
+  background-color: rgba(139, 201, 231, 0.85); /* celeste claro con transparencia */
+  color: black;
+}
+
+
+.card-content h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.comments-section {
+  margin-top: 15px;
+}
+
+.comments-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.comment-item {
+  margin-bottom: 12px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* Botón de eliminar comentario */
+.btn-delete {
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  text-decoration: underline;
+}
+
+/* Botón principal reutilizable */
+.btn-custom {
+  background-color: #5e5a5b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+
+.btn-custom:hover {
+  background-color: #4b4748;
+  transform: scale(1.05);
+}
+
+/**/
+/* Estilos para el formulario de comentarios */
+.comment-form {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+/* Input y textarea */
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Etiquetas */
+.comment-form label {
+  font-weight: bold;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* Botón */
+.comment-form button {
+  background-color: #5e5a5b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.comment-form button:hover {
+  background-color: #4b4748;
+  transform: scale(1.05);
+}
+
+/* Modo claro */
+.modo-claro .comment-form {
+  background-color: rgba(177, 14, 8, 0.85);
+  color: white;
+}
+
+.modo-claro .comment-form input,
+.modo-claro .comment-form textarea {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Modo oscuro */
+.modo-oscuro .comment-form {
+  background-color: rgba(139, 201, 231, 0.85);
+  color: black;
+}
+
+.modo-oscuro .comment-form input,
+.modo-oscuro .comment-form textarea {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.success-message {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: green;
+}
+
+/**/
+.publications-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Cada grupo de curso */
+.course-group {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título del grupo */
+.course-title {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: inherit;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+/* Lista de publicaciones dentro del curso */
+.course-publications {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Estilo según modo */
+.modo-claro .course-group {
+  background-color: rgba(177, 14, 8, 0.8);
+  color: white;
+}
+
+.modo-oscuro .course-group {
+  background-color: rgba(139, 201, 231, 0.8);
+  color: black;
+}
+
+.modo-claro .course-title {
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.modo-oscuro .course-title {
+  border-bottom-color: rgba(0, 0, 0, 0.3);
+}
+
+/* ======================= */
+/* DASHBOARD PAGE STYLES  */
+/* ======================= */
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
+/* Etiqueta del filtro */
+.filter-label {
+  font-size: 1rem;
+  color: inherit;
+}
+
+/* Select de cursos */
+.filter-select {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #2e4aa3;
+}
+
+/* Modo claro/oscuro para el contenedor */
+.modo-claro .filter-container {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: black;
+}
+
+.modo-oscuro .filter-container {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+/* Texto de carga */
+.loading-text {
+  font-size: 1.25rem;
+  text-align: center;
+  padding: 2rem;
+}

@@ -4,7 +4,7 @@ import { usePublications } from "../../shared/hooks/index.js";
 import { ListPublications } from "../../components/Publications/ListPublications";
 
 export const DashboardPage = () => {
-  const { getPublications, allPublications, isFetching, addComment } = usePublications();
+  const { getPublications, allPublications, isFetching, addComment, deleteComment } = usePublications();
   const [selectedCourse, setSelectedCourse] = useState('todos');
   const [filteredPublications, setFilteredPublications] = useState([]);
 
@@ -52,6 +52,7 @@ export const DashboardPage = () => {
       <ListPublications 
         publications={filteredPublications} 
         addComment={addComment} 
+        deleteComment={deleteComment} // ✅ Propiedad añadida
       />
     </Content>
   );

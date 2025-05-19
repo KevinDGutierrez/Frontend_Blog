@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { PublicationCard } from "./PublicationCard";
-import { deleteComment } from "../../services/index";
 
-export const ListPublications = ({ publications, addComment }) => {
+export const ListPublications = ({ publications, addComment, deleteComment }) => {
   const navigate = useNavigate();
 
   const handleNavigateToPublication = (id) => {
@@ -26,14 +25,15 @@ export const ListPublications = ({ publications, addComment }) => {
               <PublicationCard
                 key={p._id}
                 id={p._id}
-                title={p.titulo}
+                title={p.titulo || "Sin título"}
                 username={p.user?.username || "Anónimo"}
                 courseName={p.course?.name || "Sin curso"}
                 comments={Array.isArray(p.comments) ? p.comments : []}
+                content={p.content || "Sin descripción"}
                 createdAt={p.createdAt}
                 navigateToPublicationHandler={handleNavigateToPublication}
                 addComment={addComment}
-                deleteComment={deleteComment}
+                deleteComment={deleteComment} // ✅ ahora viene del hook y actualiza el estado
               />
             ))}
           </div>

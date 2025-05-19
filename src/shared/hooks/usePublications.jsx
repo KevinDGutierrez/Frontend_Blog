@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getPublications, addComment } from "../../services/index";
+import { getPublications, addComment, deleteComment } from "../../services/index";
 
 export const usePublications = () => {
   const [allPublications, setAllPublications] = useState([]);
@@ -7,29 +7,67 @@ export const usePublications = () => {
 
   const fetchPublicationsFromAPI = async () => {
     setIsFetching(true);
-    const res = await getPublications();
-    if (res && res.data && res.data.publications) {
-      setAllPublications(res.data.publications);
+    try {
+      const res = await getPublications();
+      if (res && res.data && Array.isArray(res.data.publications)) {
+        setAllPublications(res.data.publications);
+      } else {
+        setAllPublications([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener publicaciones:", error);
+      setAllPublications([]);
+    } finally {
+      setIsFetching(false);
     }
-    setIsFetching(false);
   };
 
+  // Agregar comentario: actualiza el estado local en allPublications para la publicación específica
   const addCommentToPublication = async ({ publicationId, username, content }) => {
-    const res = await addComment({ publicationId, username, content });
-    if (!res.error && res.data && res.data.comment) {
-      const newComment = res.data.comment;
+    try {
+      const res = await addComment({ publicationId, username, content });
+      if (!res.error && res.data && res.data.comment) {
+        const newComment = res.data.comment;
 
-      setAllPublications((prevPubs) =>
-        prevPubs.map((pub) =>
-          pub._id === publicationId
-            ? { ...pub, comments: [...pub.comments, newComment] }
-            : pub
-        )
-      );
+        setAllPublications((prevPubs) =>
+          prevPubs.map((pub) =>
+            pub._id === publicationId
+              ? { ...pub, comments: [...(pub.comments || []), newComment] }
+              : pub
+          )
+        );
 
-      return newComment; // ✅ devolvemos el comentario
+        return newComment;
+      }
+    } catch (error) {
+      console.error("Error al agregar comentario:", error);
     }
-    return null; // Si falla, devolvemos null
+    return null;
+  };
+
+  // Eliminar comentario: recibe publicación e id de comentario; actualiza estado y llama servicio
+  const deleteCommentFromPublication = async ({ publicationId, commentId }) => {
+    try {
+      // Aquí llamas al servicio con solo commentId, que es correcto según tu servicio
+      const res = await deleteComment(commentId);
+      if (!res.error) {
+        // Actualiza estado local quitando el comentario de la publicación
+        setAllPublications((prevPubs) =>
+          prevPubs.map((pub) =>
+            pub._id === publicationId
+              ? {
+                  ...pub,
+                  comments: (pub.comments || []).filter((c) => c._id !== commentId),
+                }
+              : pub
+          )
+        );
+      }
+      return res;
+    } catch (error) {
+      console.error("Error al eliminar comentario:", error);
+      return { error: true };
+    }
   };
 
   return {
@@ -37,5 +75,6 @@ export const usePublications = () => {
     isFetching,
     getPublications: fetchPublicationsFromAPI,
     addComment: addCommentToPublication,
+    deleteComment: deleteCommentFromPublication,
   };
 };

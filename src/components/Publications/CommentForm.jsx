@@ -14,60 +14,63 @@ export const CommentForm = ({ publicationId, onCommentAdded, addComment }) => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
 
-    // Limpiar error cuando usuario escribe
     setErrors((prev) => ({
       ...prev,
-      [e.target.name]: "",
+      [name]: "",
     }));
   };
 
   const validate = () => {
-    let valid = true;
-    let newErrors = { username: "", content: "" };
-
-    if (!formData.username.trim()) {
-      newErrors.username = "El nombre de usuario es obligatorio.";
-      valid = false;
-    }
-    if (!formData.content.trim()) {
-      newErrors.content = "El contenido del comentario es obligatorio.";
-      valid = false;
-    }
+    const trimmedUsername = formData.username.trim();
+    const trimmedContent = formData.content.trim();
+    const newErrors = {
+      username: trimmedUsername ? "" : "El nombre de usuario es obligatorio.",
+      content: trimmedContent ? "" : "El contenido del comentario es obligatorio.",
+    };
 
     setErrors(newErrors);
-    return valid;
+    return trimmedUsername && trimmedContent;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validate()) return;
 
+    const trimmedData = {
+      username: formData.username.trim(),
+      content: formData.content.trim(),
+    };
+
     try {
-      const newComment = await addComment({
+      const result = await addComment({
         publicationId,
-        username: formData.username.trim(),
-        content: formData.content.trim(),
+        ...trimmedData,
       });
 
-      if (newComment) {
+      if (result) {
+        const commentWithUser = {
+          ...result,
+          username: result.username || trimmedData.username, // ✅ asegura mostrar username
+        };
+
+        if (onCommentAdded) onCommentAdded(commentWithUser);
+
         setShowSuccess(true);
         setFormData({ username: "", content: "" });
-
-        if (onCommentAdded) onCommentAdded(newComment);
-
         setTimeout(() => setShowSuccess(false), 3000);
       } else {
-        alert("Error al agregar el comentario");
+        alert("No se pudo agregar el comentario. Intenta de nuevo.");
       }
     } catch (error) {
       console.error("Error al agregar comentario:", error);
-      alert("Error en la solicitud para agregar comentario");
+      alert("Ocurrió un error al enviar el comentario.");
     }
   };
 

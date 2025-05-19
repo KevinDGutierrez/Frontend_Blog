@@ -67,7 +67,6 @@
   border-color: #c3e6cb;
 }
 
-
 /* ======================= */
 /* FILTRO Y ORDEN DE TAREAS */
 /* ======================= */
@@ -78,30 +77,50 @@
 
 .btn-primary {
   margin-top: 10px;
-  background-color: #007bff;
+  background-color: #474139;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #3c3731;
+  transform: scale(1.05);
+}
+
+/* ========== AJUSTES DE PUBLICACIONES ========== */
+.publications-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .publication-card {
   border-radius: 12px;
-  padding: 20px;
-  margin: 15px 0;
+  padding: 16px;
+  margin: 10px 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  max-width: 100%;
   transition: background-color 0.3s ease;
-  backdrop-filter: blur(4px); /* Difuminado suave del fondo */
 }
 
-/* Modo claro: rojo (#b10e08) con transparencia */
+/* Modo claro: fondo más claro con transparencia */
 .modo-claro .publication-card {
-  background-color: rgba(177, 14, 8, 0.85); /* rojo con transparencia */
+  background-color: rgba(177, 14, 8, 0.7);
   color: white;
 }
 
-/* Modo oscuro: celeste claro con transparencia */
+/* Modo oscuro: fondo más claro con transparencia */
 .modo-oscuro .publication-card {
-  background-color: rgba(139, 201, 231, 0.85); /* celeste claro con transparencia */
+  background-color: rgba(139, 201, 231, 0.7);
   color: black;
 }
-
 
 .card-content h3 {
   margin-top: 0;
@@ -139,9 +158,10 @@
   text-decoration: underline;
 }
 
-/* Botón principal reutilizable */
-.btn-custom {
-  background-color: #5e5a5b;
+/* Botón personalizado reutilizable */
+.btn-custom,
+.comment-form button {
+  background-color: #474139;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -150,13 +170,27 @@
   margin-top: 10px;
 }
 
-.btn-custom:hover {
-  background-color: #4b4748;
+.btn-custom:hover,
+.comment-form button:hover {
+  background-color: #3c3731;
   transform: scale(1.05);
 }
 
-/**/
-/* Estilos para el formulario de comentarios */
+.modo-claro .btn-custom,
+.modo-claro .comment-form button,
+.modo-claro .btn-primary {
+  background-color: rgba(71, 65, 57, 0.7);
+  color: white;
+}
+
+.modo-oscuro .btn-custom,
+.modo-oscuro .comment-form button,
+.modo-oscuro .btn-primary {
+  background-color: rgba(212, 74, 239, 0.7);
+  color: white;
+}
+
+/* ========== FORMULARIO DE COMENTARIOS ========== */
 .comment-form {
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
@@ -167,7 +201,6 @@
   transition: background-color 0.3s ease;
 }
 
-/* Input y textarea */
 .comment-form input,
 .comment-form textarea {
   width: 100%;
@@ -181,50 +214,10 @@
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-/* Etiquetas */
 .comment-form label {
   font-weight: bold;
   display: block;
   margin-top: 0.5rem;
-}
-
-/* Botón */
-.comment-form button {
-  background-color: #5e5a5b;
-  color: white;
-  border: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.comment-form button:hover {
-  background-color: #4b4748;
-  transform: scale(1.05);
-}
-
-/* Modo claro */
-.modo-claro .comment-form {
-  background-color: rgba(177, 14, 8, 0.85);
-  color: white;
-}
-
-.modo-claro .comment-form input,
-.modo-claro .comment-form textarea {
-  background-color: rgba(255, 255, 255, 0.9);
-}
-
-/* Modo oscuro */
-.modo-oscuro .comment-form {
-  background-color: rgba(139, 201, 231, 0.85);
-  color: black;
-}
-
-.modo-oscuro .comment-form input,
-.modo-oscuro .comment-form textarea {
-  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .success-message {
@@ -233,24 +226,18 @@
   color: green;
 }
 
-/**/
-.publications-container {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Cada grupo de curso */
+/* ========== CONTENEDOR DE CURSOS ========== */
 .course-group {
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(4px);
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  max-width: 800px;
+  width: 85%;
 }
 
-/* Título del grupo */
 .course-title {
   font-size: 1.75rem;
   margin-bottom: 1rem;
@@ -259,22 +246,20 @@
   padding-bottom: 0.5rem;
 }
 
-/* Lista de publicaciones dentro del curso */
 .course-publications {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
 
-/* Estilo según modo */
 .modo-claro .course-group {
-  background-color: rgba(177, 14, 8, 0.8);
+  background-color: rgba(71, 65, 57, 0.7);
   color: white;
 }
 
 .modo-oscuro .course-group {
-  background-color: rgba(139, 201, 231, 0.8);
-  color: black;
+  background-color: rgba(212, 74, 239, 0.7);
+  color: white;
 }
 
 .modo-claro .course-title {
@@ -288,25 +273,24 @@
 /* ======================= */
 /* DASHBOARD PAGE STYLES  */
 /* ======================= */
-
 .filter-container {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem auto;
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   backdrop-filter: blur(4px);
+  max-width: 800px;
+  width: 85%;
 }
 
-/* Etiqueta del filtro */
 .filter-label {
   font-size: 1rem;
   color: inherit;
 }
 
-/* Select de cursos */
 .filter-select {
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
@@ -320,18 +304,16 @@
   border-color: #2e4aa3;
 }
 
-/* Modo claro/oscuro para el contenedor */
 .modo-claro .filter-container {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: black;
-}
-
-.modo-oscuro .filter-container {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(71, 65, 57, 0.7);
   color: white;
 }
 
-/* Texto de carga */
+.modo-oscuro .filter-container {
+  background-color: rgba(212, 74, 239, 0.7);
+  color: white;
+}
+
 .loading-text {
   font-size: 1.25rem;
   text-align: center;

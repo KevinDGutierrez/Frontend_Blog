@@ -330,14 +330,5 @@
 }
 
 /**/
-.app-container {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in forwards;
-}
 
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
 

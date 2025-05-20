@@ -9,16 +9,12 @@ export const DashboardPage = () => {
 
   const [selectedCourse, setSelectedCourse] = useState('todos');
   const [filteredPublications, setFilteredPublications] = useState([]);
-
-  // Estado local para las publicaciones (con comentarios actualizados)
   const [localPublications, setLocalPublications] = useState([]);
 
-  // Obtener publicaciones iniciales
   useEffect(() => {
     getPublications();
   }, []);
 
-  // Cuando cambian las publicaciones globales o el filtro, actualizar localPublications filtradas y ordenadas
   useEffect(() => {
     if (!allPublications) return;
 
@@ -34,21 +30,10 @@ export const DashboardPage = () => {
     setLocalPublications(filtered);
   }, [selectedCourse, allPublications]);
 
-  // Función para actualizar comentarios en el estado local
   const handleAddComment = async (commentData) => {
     const result = await addCommentAPI(commentData);
     if (result) {
-      // Actualizar localPublications agregando el nuevo comentario en la publicación correspondiente
-      setLocalPublications((prevPubs) =>
-        prevPubs.map(pub =>
-          pub._id === commentData.publicationId
-            ? { 
-                ...pub, 
-                comments: [...(pub.comments || []), result]
-              }
-            : pub
-        )
-      );
+      await getPublications();
     }
     return result;
   };
@@ -56,16 +41,7 @@ export const DashboardPage = () => {
   const handleDeleteComment = async (publicationId, commentId) => {
     const success = await deleteCommentAPI(publicationId, commentId);
     if (success) {
-      setLocalPublications((prevPubs) =>
-        prevPubs.map(pub =>
-          pub._id === publicationId
-            ? {
-                ...pub,
-                comments: pub.comments.filter(c => c._id !== commentId)
-              }
-            : pub
-        )
-      );
+      await getPublications(); 
     }
     return success;
   };
@@ -73,14 +49,7 @@ export const DashboardPage = () => {
   const handleUpdateComment = async ({ id, content }) => {
     const updatedComment = await updateCommentAPI({ id, content });
     if (updatedComment) {
-      setLocalPublications((prevPubs) =>
-        prevPubs.map(pub => ({
-          ...pub,
-          comments: pub.comments.map(c =>
-            c._id === id ? updatedComment : c
-          )
-        }))
-      );
+      await getPublications(); 
     }
     return updatedComment;
   };
@@ -111,7 +80,6 @@ export const DashboardPage = () => {
         addComment={handleAddComment} 
         deleteComment={handleDeleteComment}
         updateComment={handleUpdateComment} 
-        // No se pasa refreshPublications porque no queremos recargar todo
       />
     </Content>
   );

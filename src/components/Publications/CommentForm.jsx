@@ -1,6 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export const CommentForm = ({ publicationId, onCommentAdded, addComment }) => {
+export const CommentForm = ({
+  publicationId,
+  onCommentAdded,
+  onCommentUpdated,
+  addComment,
+  updateComment,
+  mode = "add",
+  commentId = null,
+  initialContent = "",
+}) => {
   const [formData, setFormData] = useState({
     username: "",
     content: "",
@@ -12,6 +21,15 @@ export const CommentForm = ({ publicationId, onCommentAdded, addComment }) => {
   });
 
   const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    if (mode === "edit" && initialContent) {
+      setFormData((prev) => ({
+        ...prev,
+        content: initialContent,
+      }));
+    }
+  }, [mode, initialContent]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,15 +46,14 @@ export const CommentForm = ({ publicationId, onCommentAdded, addComment }) => {
   };
 
   const validate = () => {
-    const trimmedUsername = formData.username.trim();
     const trimmedContent = formData.content.trim();
     const newErrors = {
-      username: trimmedUsername ? "" : "El nombre de usuario es obligatorio.",
+      username: "", // no obligatorio
       content: trimmedContent ? "" : "El contenido del comentario es obligatorio.",
     };
 
     setErrors(newErrors);
-    return trimmedUsername && trimmedContent;
+    return trimmedContent;
   };
 
   const handleSubmit = async (e) => {
@@ -49,53 +66,62 @@ export const CommentForm = ({ publicationId, onCommentAdded, addComment }) => {
     };
 
     try {
-      const result = await addComment({
-        publicationId,
-        ...trimmedData,
-      });
+      if (mode === "edit") {
+        const result = await updateComment({
+          id: commentId,
+          content: trimmedData.content,
+        });
 
-      if (result) {
-        const commentWithUser = {
-          ...result,
-          username: result.username || trimmedData.username, // ✅ asegura mostrar username
-        };
-
-        if (onCommentAdded) onCommentAdded(commentWithUser);
-
-        setShowSuccess(true);
-        setFormData({ username: "", content: "" });
-        setTimeout(() => setShowSuccess(false), 3000);
+        if (result && onCommentUpdated) {
+          onCommentUpdated(result);
+        }
       } else {
-        alert("No se pudo agregar el comentario. Intenta de nuevo.");
+        const result = await addComment({
+          publicationId,
+          ...trimmedData,
+        });
+
+        if (result) {
+          const commentWithUser = {
+            ...result,
+            username: result.username || trimmedData.username,
+          };
+
+          if (onCommentAdded) onCommentAdded(commentWithUser);
+          setFormData({ username: "", content: "" });
+        } else {
+          alert("No se pudo agregar el comentario. Intenta de nuevo.");
+        }
       }
+
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
     } catch (error) {
-      console.error("Error al agregar comentario:", error);
+      console.error("Error al enviar comentario:", error);
       alert("Ocurrió un error al enviar el comentario.");
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="comment-form"
-      aria-label="Formulario para agregar comentario"
-    >
-      <label htmlFor="username">Nombre de usuario</label>
-      <input
-        id="username"
-        name="username"
-        placeholder="Nombre de usuario"
-        value={formData.username}
-        onChange={handleChange}
-        required
-        autoComplete="username"
-        aria-required="true"
-        aria-describedby="username-error"
-      />
-      {errors.username && (
-        <p id="username-error" className="error-message" role="alert">
-          {errors.username}
-        </p>
+    <form onSubmit={handleSubmit} className="comment-form">
+      {mode === "add" && (
+        <>
+          <label htmlFor="username">Nombre de usuario</label>
+          <input
+            id="username"
+            name="username"
+            placeholder="Nombre de usuario"
+            value={formData.username}
+            onChange={handleChange}
+            autoComplete="username"
+            aria-describedby={errors.username ? "username-error" : undefined}
+          />
+          {errors.username && (
+            <p id="username-error" className="error-message" role="alert">
+              {errors.username}
+            </p>
+          )}
+        </>
       )}
 
       <label htmlFor="content">Comentario</label>
@@ -108,7 +134,7 @@ export const CommentForm = ({ publicationId, onCommentAdded, addComment }) => {
         required
         rows={4}
         aria-required="true"
-        aria-describedby="content-error"
+        aria-describedby={errors.content ? "content-error" : undefined}
       />
       {errors.content && (
         <p id="content-error" className="error-message" role="alert">
@@ -116,11 +142,15 @@ export const CommentForm = ({ publicationId, onCommentAdded, addComment }) => {
         </p>
       )}
 
-      <button type="submit">Enviar comentario</button>
+      <button type="submit">
+        {mode === "edit" ? "Actualizar comentario" : "Enviar comentario"}
+      </button>
 
       {showSuccess && (
         <p role="alert" className="success-message">
-          Comentario enviado con éxito.
+          {mode === "edit"
+            ? "Comentario actualizado con éxito."
+            : "Comentario enviado con éxito."}
         </p>
       )}
     </form>

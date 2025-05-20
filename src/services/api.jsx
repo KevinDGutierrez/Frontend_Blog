@@ -107,3 +107,20 @@ export const deleteComment = async (commentId) => {
 
 
 
+export const updateComment = async ({ id, content }) => {
+  try {
+    const response = await apiClient.put(`comments/${id}`, {
+      content,
+    });
+
+    return { data: response.data };
+  } catch (e) {
+    console.error("Error al actualizar comentario:", e.response);
+
+    return {
+      error: true,
+      response: e.response,
+    };
+  }
+};
+

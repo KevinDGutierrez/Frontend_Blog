@@ -15,7 +15,7 @@
 /* NAVBAR - MODO CLARO */
 /* ======================= */
 .modo-claro .custom-navbar {
-  background-color: rgba(177, 14, 8, 0.85); /* rojo con transparencia */
+  background-color: rgba(172, 105, 73, 0.3); /* rojo con transparencia */
 }
 
 .modo-claro .custom-navbar .navbar-brand {
@@ -26,7 +26,7 @@
 /* NAVBAR - MODO OSCURO */
 /* ======================= */
 .modo-oscuro .custom-navbar {
-  background-color: rgba(139, 201, 231, 0.85); /* celeste claro con transparencia */
+  background-color: rgba(212, 74, 239, 0.7); /* celeste claro con transparencia */
 }
 
 .modo-oscuro .custom-navbar .navbar-brand {
